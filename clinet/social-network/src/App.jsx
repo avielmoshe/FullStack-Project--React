@@ -9,7 +9,7 @@ function App() {
   return (
   <BrowserRouter>
   <Routes>
-    <Route path="/login" element=<LandingPage/> />
+    <Route path="/login" element={<LandingPage/>} />
   </Routes>
   </BrowserRouter>
   );

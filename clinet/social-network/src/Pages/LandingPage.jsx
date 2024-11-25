@@ -7,7 +7,9 @@ import Register from "./Components/Register";
 
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div className='background-image'>
+      
+    </div>
   )
 }
 

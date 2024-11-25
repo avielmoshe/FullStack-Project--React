@@ -76,10 +76,7 @@ export const deletePostById = async (req, res) => {
     return res.status(404).send({ error: "post not found" });
   }
 
-  console.log(userId);
-  console.log(postById.createdBy);
-
-  if (userId === postById.createdBy) {
+  if (userId.equals(postById.createdBy)) {
     try {
       const deletePost = await Post.findByIdAndDelete(id);
       res.status(200).send({

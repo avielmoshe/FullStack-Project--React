@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/:postId", crateNewComment);
+router.post("/", crateNewComment);
 
 router.get("/All/:postId", getAllCommentsByPostId);
 

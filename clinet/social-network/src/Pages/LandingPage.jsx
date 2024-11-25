@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
   return (
-    <div className='bg-slate-400 '>
+    <div className='bg-slate-400 w-full h-full '>
       <h1>sss</h1>
     </div>
   )

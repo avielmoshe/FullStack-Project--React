@@ -32,6 +32,7 @@ const Register = () => {
     <form
       onSubmit={handleFormSubmit}
       style={{
+        color: "black",
         display: "flex",
         flexDirection: "column",
         background: "black",
@@ -41,6 +42,7 @@ const Register = () => {
     >
       <label htmlFor="userName">userName</label>
       <input
+      placeholder='lkh'
         ref={userNameRef}
         type="text"
         id="userName"
@@ -53,7 +55,7 @@ const Register = () => {
         id="email"
         name="email"
       />
-      <button type="submit">{btnText}</button>
+      <button type="submit" style={{color: "white"}}>{btnText}</button>
     </form>
   </>
   )

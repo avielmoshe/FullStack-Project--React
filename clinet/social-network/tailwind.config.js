@@ -5,6 +5,8 @@ export default {
     extend: {
       colors: {
         primary: "#101010",
+        bgBtnColor: "hsla(0, 2%, 13%, 0.948)",
+        btnColor: "#AAAAAA"
       },
     },
   },

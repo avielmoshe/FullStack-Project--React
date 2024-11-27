@@ -6,21 +6,27 @@ import { Link } from 'react-router-dom'
 
 //turnery to check if user is signed if not redirect to here 
 
+const divChoice ='bg-bgBtnColor text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl'
+ 
 const LandingPage = () => {
   return (
     <>
-    <div className='img h-20'></div>
-    <div className='bg-slate-400 w-full h-full'>
-      <h1>sss</h1>
-      <button>
-        <Link to = {`/signin`}>
-        SignIn
+    <div className='img'></div>
+    
+    <h1 className='text-center my-10 text-5xl' >Threads MOCK</h1>
+      <div className={divChoice}>
+        <Link to = {`/signin`} className={`${divChoice} text-btnColor w-40 block`}>
+        <button>
+        Sign In
+        </button>
         </Link>
-        <Link to = {`/signup`}>
-        SignUp
+      </div>
+      <Link to = {`/signup`} className={`${divChoice} text-btnColor w-40 block animate-bounce`}>
+        <button>
+        Sign Up
+        </button>
         </Link>
-      </button>
-    </div>
+        
     </>
   )
 }

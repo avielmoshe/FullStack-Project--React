@@ -2,8 +2,14 @@ import React from 'react'
 import { useState , useRef } from 'react'
 import { useNavigate } from "react-router-dom";
 
+
+const divChoice ='bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl'
+const inputCss = 'bg-bgBtnColor text-btnColor rounded-lg my-1 h-14 p-5 text-base'
+const submitCss ='bg-white text-btnColor rounded-lg my-1 h-14 p-5 text-base leading-none'
+const titleCss = `text-center mb-4  font-bold`
+
 const Register = () => {
-  const [btnText , setBtnText] = useState("Submit")
+  const [btnText , setBtnText] = useState("Signup")
 
   const userNameRef = useRef("");
   const emailRef = useRef("");
@@ -28,34 +34,32 @@ const Register = () => {
 
   return (
     <>
-    <div>SignUp</div>
-    <form
+    <div className='img'></div>
+    <div className={titleCss}>SignUp to threads</div>
+    <form className={`${divChoice} w-80 bg-transparent`}
       onSubmit={handleFormSubmit}
       style={{
-        color: "black",
         display: "flex",
         flexDirection: "column",
-        background: "black",
-        padding: "1.5rem",
-        gap: "1rem",
       }}
     >
-      <label htmlFor="userName">userName</label>
       <input
-      placeholder='lkh'
+      className={inputCss}
+      placeholder='userName'
         ref={userNameRef}
         type="text"
         id="userName"
         name="userName"
       />
-      <label htmlFor="email">Email</label>
       <input
+      className={inputCss}
+      placeholder='Email'
         ref={emailRef}
         type="text"
         id="email"
         name="email"
       />
-      <button type="submit" style={{color: "white"}}>{btnText}</button>
+      <button className={submitCss} type="submit" >{btnText}</button>
     </form>
   </>
   )

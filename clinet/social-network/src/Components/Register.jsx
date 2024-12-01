@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../utils/userApi";
+import { useDispatch } from 'react-redux'; 
+import { setUser } from "../store/slices/userSlicer";
 
 const divChoice =
   "bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl";
@@ -23,6 +25,7 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +37,13 @@ const Register = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
     const data = await signUp(formData);
+    dispatch(setUser(data.username));
+
     setBtnText("loading");
     setMsgText(data.message);
+
     setTimeout(() => {
       setFormData({
         username: "",
@@ -76,7 +83,7 @@ const Register = () => {
           id="username"
           name="username"
           onChange={handleChange}
-          required="true"
+          required={true}
         />
         <input
           className={inputCss}
@@ -86,7 +93,7 @@ const Register = () => {
           id="email"
           name="email"
           onChange={handleChange}
-          required="true"
+          required={true}
         />
         <input
           className={inputCss}
@@ -96,7 +103,7 @@ const Register = () => {
           id="password"
           name="password"
           onChange={handleChange}
-          required="true"
+          required={true}
         />
         <label htmlFor="show">ShowPassword</label>
         <input

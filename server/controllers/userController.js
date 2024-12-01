@@ -1,10 +1,15 @@
 import User from "../models/userModel.js";
+import { hashPassword, comparePassword } from "../utils/auth.js";
+import JWT from "jsonwebtoken";
+const JWT_EXPIRATION = { expiresIn: "1h" };
 
 export const createNewUser = async (req, res) => {
   try {
-    const { username, email } = req.body;
-    if (!username || !email) {
-      return res.status(400).send({ error: "email and username are required" });
+    const { username, email, password } = req.body;
+    if (!username || !password || !email) {
+      return res
+        .status(400)
+        .send({ error: "email ,username and password are required" });
     }
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
@@ -13,15 +18,17 @@ export const createNewUser = async (req, res) => {
         .json({ message: "Username or email already exists" });
     }
 
+    const hashedPassword = await hashPassword(password);
     const newUser = new User({
       username,
       email,
+      password: hashedPassword,
     });
 
     await newUser.save();
     res.status(201).send({
       status: "success",
-      message: "User Successfully Registered",
+      message: "User Succefully Regitered",
       data: newUser,
     });
   } catch (error) {
@@ -30,24 +37,39 @@ export const createNewUser = async (req, res) => {
 };
 
 export const singInUser = async (req, res) => {
-  const { username, email } = req.body;
-  if (!email && !username) {
-    return res.status(400).send({ error: "email/username is required" });
+  const { username, email, password } = req.body;
+  if (!password || (!email && !username)) {
+    return res
+      .status(400)
+      .send({ error: "email/username and password is required" });
   }
   try {
     const foundUser = await User.findOne({
-      $and: [{ username: req.body.username }, { email: req.body.email }],
+      $or: [{ username: req.body.username }, { email: req.body.email }],
     });
     if (!foundUser) {
-      return res
-        .status(404)
-        .send({ message: "Email/username not found.", isAuth: false });
+      return res.status(404).send({ error: "Email/username not found." });
     }
 
+    const isAuth = await comparePassword(password, foundUser.password);
+    if (!isAuth) {
+      return res.status(401).send({ error: "Invalid password." });
+    }
+
+    const { _id, username, email, createdAt } = foundUser;
+    const filteredUser = { _id, username, email, createdAt };
+
+    const token = JWT.sign(filteredUser, process.env.JWT_KEY, JWT_EXPIRATION);
+
+    res.cookie("jwt", token, {
+      httpOnly: false,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
     res.status(200).send({
       message: "Authentication successful",
       isAuth: true,
-      user: foundUser,
     });
   } catch (error) {
     console.error("Sign-in error:", error);

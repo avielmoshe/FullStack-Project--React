@@ -12,7 +12,7 @@ const titleCss = `text-center mb-4  font-bold`
 const Login = () => {
   const [btnText , setBtnText] = useState("Login")
   const [isSubmitted , setIsSubmitted] = useState(false)
-  const [passType , setPassType] = useState("false")
+  const [passType , setPassType] = useState(false)
 
   const userNameRef = useRef("");
   const emailRef = useRef("");

@@ -13,7 +13,7 @@ const titleCss = `text-center mb-4  font-bold`
 const Register = () => {
   const [btnText , setBtnText] = useState("Signup")
   const [isSubmitted , setIsSubmitted] = useState(false)
-  const [passType , setPassType] = useState("false")
+  const [passType , setPassType] = useState(false)
 
   const userNameRef = useRef("");
   const emailRef = useRef("");
@@ -78,7 +78,7 @@ console.log(passType);
         name="password"
       />
         <label htmlFor="show">ShowPassword</label>
-        <input type="checkBox" id="show" name="show" onClick={()=>setPassType(!passType) }/>
+        <input type="checkBox" id="show" name="show" onChange={()=>setPassType(!passType) }/>
       <button onClick={()=>setIsSubmitted(true)} className={`${submitCss} ${isSubmitted ? "animate-pulse" : ""}`} type="submit" >{btnText}</button>
     </form>
   </>

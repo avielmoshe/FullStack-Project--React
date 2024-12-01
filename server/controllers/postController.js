@@ -58,21 +58,12 @@ export const getPostById = async (req, res) => {
 };
 
 export const deletePostById = async (req, res) => {
-  const { email, username } = req.body;
   const { id } = req.params;
-  if (!username && !email) {
-    return res.status(400).send({ error: "email or username are required" });
-  }
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  if (!existingUser) {
-    return res.status(400).json({ message: "Username or email not found" });
-  }
-  const userId = existingUser._id;
+  const userId = req.user._id;
   const postById = await Post.findById(id);
   if (!postById) {
     return res.status(404).send({ error: "post not found" });
   }
-
   if (userId.equals(postById.createdBy)) {
     try {
       const deletePost = await Post.findByIdAndDelete(id);

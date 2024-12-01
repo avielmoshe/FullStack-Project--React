@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../utils/userApi";
 import { useDispatch } from "react-redux";
@@ -22,7 +22,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,17 +34,14 @@ const Login = () => {
     });
   };
 
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const data = await signIn(formData);
-    console.log(data.username);
-    
     dispatch(setUser(data.username));
-
     setBtnText("loading");
     setMsgText(data.message);
+
     setTimeout(() => {
       setFormData({
         email: "",
@@ -52,7 +49,7 @@ const Login = () => {
       });
       if (data.isAuth) {
         setTimeout(() => {
-          navigate("/");
+          navigate("/HomePage");
         }, 1000);
       } else {
         setMsgText(data.error.error);

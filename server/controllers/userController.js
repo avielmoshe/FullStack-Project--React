@@ -48,7 +48,7 @@ export const singInUser = async (req, res) => {
       $or: [{ username: req.body.username }, { email: req.body.email }],
     });
     if (!foundUser) {
-      return res.status(404).send({ error: "Email/username not found." });
+      return res.status(404).send({ error: "Email not found." });
     }
 
     const isAuth = await comparePassword(password, foundUser.password);

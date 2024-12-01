@@ -10,14 +10,19 @@ const titleCss = `text-center mb-4  font-bold`
 
 const Register = () => {
   const [btnText , setBtnText] = useState("Signup")
+  const [isSubmitted , setIsSubmitted] = useState(false)
+  const [passType , setPassType] = useState("false")
 
   const userNameRef = useRef("");
   const emailRef = useRef("");
+  const passwordRef = useRef("");
 
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) =>{
     e.preventDefault();
+    console.log(isSubmitted);
+    
     setBtnText("loading")
     
     console.log(userNameRef.current.value);
@@ -25,12 +30,14 @@ const Register = () => {
     setTimeout(()=>{
       userNameRef.current.value=""
       emailRef.current.value=""
-      setBtnText("SUBMIT")
       setTimeout(()=>{
-        navigate("/")
+        // navigate("/")
       },1000)
-  },2000)
+      setBtnText("Signup")
+      setIsSubmitted(false)
+    },2000)
   }
+console.log(passType);
 
   return (
     <>
@@ -59,7 +66,17 @@ const Register = () => {
         id="email"
         name="email"
       />
-      <button className={submitCss} type="submit" >{btnText}</button>
+      <input
+      className={inputCss}
+      placeholder='Password'
+        ref={passwordRef}
+        type={passType ? "text" : "password"}
+        id="password"
+        name="password"
+      />
+        <label htmlFor="show">ShowPassword</label>
+        <input type="checkBox" id="show" name="show" onClick={()=>setPassType(!passType) }/>
+      <button onClick={()=>setIsSubmitted(true)} className={`${submitCss} ${isSubmitted ? "animate-pulse" : ""}`} type="submit" >{btnText}</button>
     </form>
   </>
   )

@@ -19,7 +19,7 @@ const Login = () => {
 
   const handleFormSubmit = (e) =>{
     e.preventDefault();
-    signUp(userNameRef, emailRef);
+    // signUp(userNameRef, emailRef);
     setBtnText("loading")
     
     console.log(userNameRef.current.value);

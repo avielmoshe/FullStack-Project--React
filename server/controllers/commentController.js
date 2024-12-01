@@ -1,93 +1,96 @@
 import Comment from "../models/commentModel.js";
 import Post from "../models/postModel.js";
+import User from "../models/userModel.js";
 
 export const crateNewComment = async (req, res) => {
-  const userId = req.user._id;
+  const { CommentText, postId, email, username } = req.body;
+  if (!username && !email) {
+    return res.status(400).send({ error: "email or username are required" });
+  }
+  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+  if (!existingUser) {
+    return res.status(400).json({ message: "Username or email not found" });
+  }
+  const userId = existingUser._id;
 
-  const { bookId } = req.params;
-  const { reviewText, rating } = req.body;
-  if (!reviewText || !rating) {
+  if (!CommentText || !postId) {
     return res
       .status(400)
-      .send({ error: "reviewText and rating are required" });
+      .send({ error: "CommentText and postId are required" });
   }
-  if (rating < 1 || rating > 5) {
-    return res.status(400).send({ error: "Rating must be between 1 and 5" });
-  }
-
   try {
-    const existingReview = await Review.findOne({
+    const newComment = new Comment({
+      username: username,
+      CommentText: CommentText,
       createdBy: userId,
-      book: bookId,
-    });
-    if (existingReview) {
-      return res
-        .status(400)
-        .send({ error: "You have already reviewed this book" });
-    }
-
-    const newReview = new Review({
-      username: req.user.username,
-      reviewText,
-      rating,
-      createdBy: userId,
-      book: bookId,
+      postId: postId,
     });
 
-    console.log(newReview);
+    await newComment.save();
 
-    await newReview.save();
-
-    await Book.findByIdAndUpdate(bookId, { $push: { reviews: newReview._id } });
+    await Post.findByIdAndUpdate(postId, {
+      $push: { comments: newComment._id },
+    });
 
     res.status(201).send({
-      message: "Review added successfully",
-      newReview,
+      message: "Comment added successfully",
+      newComment,
     });
   } catch (error) {
-    console.error("Error adding review:", error);
+    console.error("Error adding comment:", error);
     res.status(500).send({ error: "Server error" });
   }
 };
 
 export const getAllCommentsByPostId = async (req, res) => {
   try {
-    const { bookId } = req.params;
-    const bookById = await Book.findById(bookId);
-    if (!bookById) {
-      return res.status(404).send({ error: "book not found" });
+    const { postId } = req.params;
+    const postById = await Post.findById(postId);
+    console.log(postById);
+
+    if (!postById) {
+      return res.status(404).send({ error: "post not found" });
     }
-    const reviews = await Review.find({ book: bookId }).populate(
+    const Comments = await Comment.find({ postId: postId }).populate(
       "createdBy",
       "username email"
     );
-    res.status(201).send(reviews);
+    res.status(201).send(Comments);
   } catch (error) {
-    console.error("Error finding bookById by ID:", error);
+    console.error("Error finding Comments by bookId:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
 
 export const deleteCommentById = async (req, res) => {
-  const { reviewId } = req.params;
-  const reviewById = await Review.findById(reviewId);
-  if (!reviewById) {
-    return res.status(404).send({ error: "review not found" });
+  const { commentsId } = req.params;
+  const { email, username } = req.body;
+  if (!username && !email) {
+    return res.status(400).send({ error: "email or username are required" });
   }
-  if (req.user._id === reviewById.createdBy.toString()) {
+  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+  if (!existingUser) {
+    return res.status(400).json({ message: "Username or email not found" });
+  }
+  const userId = existingUser._id;
+  const commentById = await Comment.findById(commentsId);
+  if (!commentById) {
+    return res.status(404).send({ error: "comment not found" });
+  }
+  if (userId.equals(commentById.createdBy)) {
     try {
-      const deleteReview = await Review.findByIdAndDelete(reviewId);
+      const deleteComment = await Comment.findByIdAndDelete(commentsId);
       res.status(200).send({
-        message: "review deleted successfully",
-        deleteReview,
+        message: "comment deleted successfully",
+        deleteComment,
       });
     } catch (error) {
-      console.error("Error finding review by ID:", error);
+      console.error("Error finding comment by ID:", error);
       res.status(500).json({ error: "Server error" });
     }
   } else
     res.status(400).send({
       status: "failed",
-      mes: "only the user that created the review can delete him",
+      mes: "only the user that created the comment can delete him",
     });
 };

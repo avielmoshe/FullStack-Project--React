@@ -3,6 +3,19 @@ import { hashPassword, comparePassword } from "../utils/auth.js";
 import JWT from "jsonwebtoken";
 const JWT_EXPIRATION = { expiresIn: "1h" };
 
+export const TokenValid = (req, res) => {
+  try {
+    res.status(200).send({
+      userValid: true,
+      username: req.user.username,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ error: "Something went wrong. Please try again later." });
+  }
+};
+
 export const createNewUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -70,6 +83,7 @@ export const singInUser = async (req, res) => {
     res.status(200).send({
       message: "Authentication successful",
       isAuth: true,
+      username: username,
     });
   } catch (error) {
     console.error("Sign-in error:", error);
@@ -81,15 +95,8 @@ export const singInUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { username, email, newUsername, newEmail } = req.body;
-    if (!username && !email) {
-      return res.status(400).send({ error: "email and username are required" });
-    }
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-    if (!existingUser) {
-      return res.status(400).json({ message: "Username or email not found" });
-    }
-    const id = existingUser._id;
+    const { newUsername, newEmail } = req.body;
+    const id = req.user._id;
     const updateData = {};
     if (newUsername) updateData.username = newUsername;
     if (newEmail) updateData.email = newEmail;
@@ -109,16 +116,7 @@ export const updateUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    const { username, email } = req.body;
-    if (!username && !email) {
-      return res.status(400).send({ error: "email and username are required" });
-    }
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-    if (!existingUser) {
-      return res.status(400).json({ message: "Username or email not found" });
-    }
-    const id = existingUser._id;
-
+    const id = req.user._id;
     const deleteUser = await User.findByIdAndDelete(id);
     res.status(200).send({
       message: "user deleted successfully",

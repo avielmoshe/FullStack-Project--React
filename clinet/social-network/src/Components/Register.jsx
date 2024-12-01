@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState , useRef } from 'react'
 import { useNavigate } from "react-router-dom";
+import { signUp } from '../utils/userApi';
+
 
 
 const divChoice ='bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl'
@@ -22,7 +24,8 @@ const Register = () => {
   const handleFormSubmit = (e) =>{
     e.preventDefault();
     console.log(isSubmitted);
-    
+    const user = {userName: userNameRef, email: emailRef, password: passwordRef }
+    signUp(user);
     setBtnText("loading")
     
     console.log(userNameRef.current.value);

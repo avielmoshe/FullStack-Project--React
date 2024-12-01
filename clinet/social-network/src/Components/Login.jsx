@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState , useRef } from 'react'
 import { useNavigate } from "react-router-dom";
-import { signUp } from '../utils/userApi';
+import { signIn } from '../utils/userApi';
 
 
 const divChoice ='bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl'
@@ -11,15 +11,21 @@ const titleCss = `text-center mb-4  font-bold`
 
 const Login = () => {
   const [btnText , setBtnText] = useState("Login")
+  const [isSubmitted , setIsSubmitted] = useState(false)
+  const [passType , setPassType] = useState(false)
 
   const userNameRef = useRef("");
   const emailRef = useRef("");
+  const passwordRef = useRef("");
+
 
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) =>{
     e.preventDefault();
-    signUp(userNameRef, emailRef);
+    signIn(user);
+    const user = {userName: userNameRef, email: emailRef, password: passwordRef }
+    signUp(user)
     setBtnText("loading")
     
     console.log(userNameRef.current.value);
@@ -27,10 +33,11 @@ const Login = () => {
     setTimeout(()=>{
       userNameRef.current.value=""
       emailRef.current.value=""
-      setBtnText("SUBMIT")
       setTimeout(()=>{
-        navigate("/")
+        // navigate("/")
       },1000)
+      setBtnText("SUBMIT")
+      setIsSubmitted(false)
   },2000)
   }
 
@@ -61,6 +68,17 @@ const Login = () => {
         id="email"
         name="email"
       />
+            <input
+      className={inputCss}
+      placeholder='Password'
+        ref={passwordRef}
+        type={passType ? "text" : "password"}
+        id="password"
+        name="password"
+      />
+        <label htmlFor="show">ShowPassword</label>
+        <input type="checkBox" id="show" name="show" onClick={()=>setPassType(!passType) }/>
+        
       <button className={submitCss} type="submit" >{btnText}</button>
     </form>
   </>

@@ -4,13 +4,14 @@ import {
   getAllCommentsByPostId,
   deleteCommentById,
 } from "../controllers/commentController.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/", crateNewComment);
+router.post("/", verifyToken, crateNewComment);
 
 router.get("/All/:postId", getAllCommentsByPostId);
 
-router.delete("/delete/:commentsId", deleteCommentById);
+router.delete("/delete/:commentsId", verifyToken, deleteCommentById);
 
 export default router;

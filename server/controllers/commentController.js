@@ -1,18 +1,10 @@
 import Comment from "../models/commentModel.js";
 import Post from "../models/postModel.js";
-import User from "../models/userModel.js";
 
 export const crateNewComment = async (req, res) => {
-  const { CommentText, postId, email, username } = req.body;
-  if (!username && !email) {
-    return res.status(400).send({ error: "email or username are required" });
-  }
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  if (!existingUser) {
-    return res.status(400).json({ message: "Username or email not found" });
-  }
-  const userId = existingUser._id;
-
+  const { CommentText, postId } = req.body;
+  const userId = req.user._id;
+  const username = req.user.username;
   if (!CommentText || !postId) {
     return res
       .status(400)
@@ -64,15 +56,7 @@ export const getAllCommentsByPostId = async (req, res) => {
 
 export const deleteCommentById = async (req, res) => {
   const { commentsId } = req.params;
-  const { email, username } = req.body;
-  if (!username && !email) {
-    return res.status(400).send({ error: "email or username are required" });
-  }
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  if (!existingUser) {
-    return res.status(400).json({ message: "Username or email not found" });
-  }
-  const userId = existingUser._id;
+  const userId = req.user._id;
   const commentById = await Comment.findById(commentsId);
   if (!commentById) {
     return res.status(404).send({ error: "comment not found" });

@@ -4,10 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../store/slices/userSlicer";
 import { isUserValid } from "../utils/userApi.js";
-<<<<<<< HEAD
-=======
-// import NavBar from "../Components/NavBar.jsx";
->>>>>>> origin/main
 
 const divChoice =
   "bg-bgBtnColor text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl";

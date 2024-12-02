@@ -14,14 +14,10 @@ const submitCss =
 const titleCss = `text-center mb-4  font-bold`;
 
 const Login = () => {
-  const [btnText, setBtnText] = useState("Login");
-  const [msgText, setMsgText] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [passType, setPassType] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  return (
+    <div className='bg-primary' >Login Or sign up</div>
+  )
+}
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

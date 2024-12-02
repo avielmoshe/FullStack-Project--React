@@ -37,6 +37,7 @@ const Register = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    isSubmitted === true;
 
     const data = await signUp(formData);
     dispatch(setUser(data.username));

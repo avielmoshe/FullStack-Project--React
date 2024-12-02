@@ -36,6 +36,8 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    isSubmitted === true;
+
 
     const data = await signIn(formData);
     dispatch(setUser(data.username));
@@ -54,7 +56,7 @@ const Login = () => {
       } else {
         setMsgText(data.error.error);
       }
-      setBtnText("SUBMIT");
+      setBtnText("Login");
       setIsSubmitted(false);
     }, 2000);
   };
@@ -100,7 +102,7 @@ const Login = () => {
           onClick={() => setPassType(!passType)}
         />
 
-        <button className={submitCss} type="submit">
+        <button className={`${submitCss} ${isSubmitted ? "animate-pulse" : ""}`} type="submit">
           {btnText}
         </button>
       </form>

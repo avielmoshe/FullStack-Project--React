@@ -4,7 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
+<<<<<<< HEAD
         primary: "#222020f2",
+=======
+        primary: "#101010",
+        bgBtnColor: "hsla(0, 2%, 13%, 0.948)",
+        btnColor: "#AAAAAA"
+>>>>>>> origin/main
       },
     },
   },

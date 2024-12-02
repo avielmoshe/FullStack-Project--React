@@ -11,7 +11,12 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 app.use(morgan("tiny"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from the frontend URL.
+    credentials: true, // Enable credentials (e.g., cookies) in cross-origin requests.
+  })
+);
 dotenv.config();
 
 const uri = process.env.DB_URI;

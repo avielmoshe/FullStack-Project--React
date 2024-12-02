@@ -2,15 +2,12 @@ import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
 
 export const crateNewPost = async (req, res) => {
-  const { title, content, email, username } = req.body;
-  if (!username && !email) {
-    return res.status(400).send({ error: "email or username are required" });
+  const { title, content } = req.body;
+  if (!title && !content) {
+    return res.status(400).send({ error: "title or content are required" });
   }
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  if (!existingUser) {
-    return res.status(400).json({ message: "Username or email not found" });
-  }
-  const id = existingUser._id;
+  const id = req.user._id;
+  const username = req.user.username;
   if (!title || !content) {
     return res.status(400).json({
       error: "All fields (title,content ) are required",
@@ -18,7 +15,7 @@ export const crateNewPost = async (req, res) => {
   }
   try {
     const newPost = new Post({
-      username: existingUser.username,
+      username: username,
       title,
       content,
       createdBy: id,
@@ -61,25 +58,13 @@ export const getPostById = async (req, res) => {
 };
 
 export const deletePostById = async (req, res) => {
-  const { email, username } = req.body;
   const { id } = req.params;
-  if (!username && !email) {
-    return res.status(400).send({ error: "email or username are required" });
-  }
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  if (!existingUser) {
-    return res.status(400).json({ message: "Username or email not found" });
-  }
-  const userId = existingUser._id;
+  const userId = req.user._id;
   const postById = await Post.findById(id);
   if (!postById) {
     return res.status(404).send({ error: "post not found" });
   }
-
-  console.log(userId);
-  console.log(postById.createdBy);
-
-  if (userId === postById.createdBy) {
+  if (userId.equals(postById.createdBy)) {
     try {
       const deletePost = await Post.findByIdAndDelete(id);
       res.status(200).send({

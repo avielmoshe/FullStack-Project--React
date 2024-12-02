@@ -5,15 +5,16 @@ import {
   getPostById,
   deletePostById,
 } from "../controllers/postController.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/cratePost", crateNewPost);
+router.post("/cratePost", verifyToken, crateNewPost);
 
 router.get("/", getPosts);
 
 router.get("/byId/:id", getPostById);
 
-router.delete("/byId/:id", deletePostById);
+router.delete("/byId/:id", verifyToken, deletePostById);
 
 export default router;

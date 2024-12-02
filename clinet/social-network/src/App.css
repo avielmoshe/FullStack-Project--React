@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 body {
   background-color: #101010;
   color: white;
+=======
+body{
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+>>>>>>> origin/main
 }
 
 .img {

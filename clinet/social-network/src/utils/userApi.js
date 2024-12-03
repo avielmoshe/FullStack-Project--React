@@ -45,3 +45,21 @@ export const isUserValid = async () => {
     };
   }
 };
+
+
+export const deleteCookie = async ()=>{
+try {
+  Cookies.remove("jwt");
+} catch (error) {
+  console.log(error);
+  
+}
+}
+
+export const updateUser = async (username , email , password)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}

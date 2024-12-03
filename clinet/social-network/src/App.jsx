@@ -7,6 +7,8 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import NavBar from "./Components/NavBar";
 import MyAccount from "./Components/MyAccount";
+import EditProfile from "./Pages/EditProfile";
+import UploadPost from "./Pages/UploadPost";
 
 //if user is not signed in redirect to landing Page "/login" else stay in "/"
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/MyAccount" element={<MyAccount />} />
+          <Route path="/EditProfile" element={<EditProfile />} />
+          <Route path="/UploadPost" element={<UploadPost />} />
         </Routes>
         <NavBar />
       </BrowserRouter>

@@ -7,6 +7,7 @@ export const TokenValid = (req, res) => {
   try {
     res.status(200).send({
       username: req.user.username,
+      userLogout: false,
     });
   } catch (error) {
     res

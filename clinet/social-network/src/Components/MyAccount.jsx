@@ -9,7 +9,7 @@ const MyAccount = () => {
 
   const userName = useSelector((state) => state.user.username);
   const submitCss =
-    "bg-white text-btnColor rounded-lg my-1 h-14 p-5 text-base leading-none";
+    "bg-white text-btnColor rounded-lg my-1 h-1 p-5 leading-none";
   useCheckIfUserValid();
 
   function handleLogout() {
@@ -18,12 +18,16 @@ const MyAccount = () => {
   }
 
   return (
-    <div className="flex flex-col text-center justify-center">
-      <AccountCircleIcon sx={{ alignSelf: "center" }} />
-      <p>{userName}</p>
-      <button onClick={handleLogout} className={submitCss}>
-        LogOut
-      </button>
+    <div className="h-screen p-[20px] ">
+      <div className=" sm:mr-[70px]">
+        <p className="text-[35px] mb-[10px]">{userName}</p>
+        <AccountCircleIcon sx={{ fontSize: "40px", marginBottom: "5px" }} />
+        <p>"bio"</p>
+        <button className={submitCss}>Edit profile</button>
+        <button onClick={handleLogout} className={submitCss}>
+          LogOut
+        </button>
+      </div>
     </div>
   );
 };

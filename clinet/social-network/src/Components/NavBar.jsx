@@ -50,9 +50,11 @@ function NavBar() {
           <BookmarksOutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
         </div>
 
-        <div className={iconCss}>
-          <Person2OutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
-        </div>
+        <Link to="/MyAccount">
+            <div className={iconCss}>
+              <Person2OutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
+            </div>
+        </Link>
       </div>
 
       <div></div>

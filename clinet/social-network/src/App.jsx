@@ -6,6 +6,7 @@ import HomePage from "./Pages/HomePage";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import NavBar from "./Components/NavBar";
+import MyAccount from "./Components/MyAccount";
 
 //if user is not signed in redirect to landing Page "/login" else stay in "/"
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/HomePage" element={<HomePage />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/MyAccount" element={<MyAccount />} />
         </Routes>
         <NavBar />
       </BrowserRouter>

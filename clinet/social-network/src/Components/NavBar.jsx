@@ -30,24 +30,30 @@ function NavBar() {
         </div>
       </Link>
 
-      <div className="flex gap-10  sm:flex-col">
+      <div className="flex justify-between  sm:flex-col sm:justify-normal sm:gap-10 ">
         <Link to="/HomePage">
           <div className={iconCss}>
             <HomeIcon sx={{ fontSize: 40, padding: "1px" }} />
           </div>
         </Link>
 
-        <div className={iconCss}>
-          <SearchIcon sx={{ fontSize: 40, padding: "1px" }} />
-        </div>
+        <Link to="/HomePage">
+          <div className={iconCss}>
+            <SearchIcon sx={{ fontSize: 40, padding: "1px" }} />
+          </div>
+        </Link>
 
-        <div className={iconCss}>
-          <AddIcon sx={{ fontSize: 40, padding: "1px" }} />
-        </div>
+        <Link to="/UploadPost">
+          <div className={iconCss}>
+            <AddIcon sx={{ fontSize: 40, padding: "1px" }} />
+          </div>
+        </Link>
 
-        <div className={iconCss}>
-          <BookmarksOutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
-        </div>
+        <Link to="/HomePage">
+          <div className={iconCss}>
+            <BookmarksOutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
+          </div>
+        </Link>
 
         <Link to="/MyAccount">
           <div className={iconCss}>

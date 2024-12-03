@@ -40,7 +40,7 @@ export const isUserValid = async () => {
     return response.data;
   } catch (error) {
     return {
-      success: false,
+      userLogout: true,
       error: error.response?.data || error.message,
     };
   }

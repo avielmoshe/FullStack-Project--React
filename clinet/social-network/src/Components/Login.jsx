@@ -38,21 +38,18 @@ const Login = () => {
     e.preventDefault();
     isSubmitted === true;
 
-
     const data = await signIn(formData);
-    dispatch(setUser(data.username));
     setBtnText("loading");
     setMsgText(data.message);
 
     setTimeout(() => {
+      dispatch(setUser(data.username));
       setFormData({
         email: "",
         password: "",
       });
       if (data.isAuth) {
-        setTimeout(() => {
-          navigate("/HomePage");
-        }, 1000);
+        navigate("/HomePage");
       } else {
         setMsgText(data.error.error);
       }
@@ -102,7 +99,10 @@ const Login = () => {
           onClick={() => setPassType(!passType)}
         />
 
-        <button className={`${submitCss} ${isSubmitted ? "animate-pulse" : ""}`} type="submit">
+        <button
+          className={`${submitCss} ${isSubmitted ? "animate-pulse" : ""}`}
+          type="submit"
+        >
           {btnText}
         </button>
       </form>

@@ -16,7 +16,7 @@ function NavBar() {
     <div
       className={`${
         isLog.username
-          ? "flex flex-col justify-between absolute bottom-0 w-full sm:right-0 sm:w-[70px] sm:h-full"
+          ? "bg-black flex flex-col justify-between absolute bottom-0 w-full sm:right-0 sm:w-[70px] sm:h-full"
           : "hidden"
       }`}
     >
@@ -50,9 +50,9 @@ function NavBar() {
         </div>
 
         <Link to="/MyAccount">
-            <div className={iconCss}>
-              <Person2OutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
-            </div>
+          <div className={iconCss}>
+            <Person2OutlinedIcon sx={{ fontSize: 40, padding: "1px" }} />
+          </div>
         </Link>
       </div>
 

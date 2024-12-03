@@ -11,7 +11,7 @@ import NavBar from "./Components/NavBar";
 
 function App() {
   return (
-    <div className="h-[100%] grid grid-row-[1fr_70px] sm:grid-cols-[1fr_70px]">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />

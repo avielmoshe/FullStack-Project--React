@@ -14,9 +14,12 @@ function NavBar() {
 
   return (
     <div
-      className={`flex items-end h-[70px] w-[100%] ${
-        isLog.username ? "flex" : "hidden"
-      } sm:flex-col justify-between h-[100%] w-[60px] `}
+      className={`${
+        isLog.username ? "absolute bottom-0 sm:right-0 " : "hidden"
+      }`}
+      // className={`flex items-end  w-screen ${
+      //   isLog.username ? "flex" : "hidden"
+      // } sm:flex-col justify-between w-[60px] `}
     >
       <Link to="/HomePage">
         <div className="hidden sm:flex justify-center ">

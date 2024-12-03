@@ -37,6 +37,7 @@ export const isUserValid = async () => {
         Authorization: `Bearer ${jwt}`,
       },
     });
+
     return response.data;
   } catch (error) {
     return {
@@ -46,20 +47,7 @@ export const isUserValid = async () => {
   }
 };
 
-
-export const deleteCookie = async ()=>{
-try {
-  Cookies.remove("jwt");
-} catch (error) {
-  console.log(error);
-  
-}
-}
-
-export const updateUser = async (username , email , password)=>{
+export const updateUser = async (username, email, password) => {
   try {
-    
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};

@@ -1,0 +1,19 @@
+import { useNavigate } from "react-router-dom";
+import { isUserValid } from "../utils/userApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/slices/userSlicer";
+
+export async function useCheckIfUserValid() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const dataAuth = await isUserValid();
+  console.log(dataAuth.userLogout);
+  console.log(dataAuth);
+
+  if (dataAuth.userLogout) {
+    navigate("/");
+  } else {
+    dispatch(setUser(dataAuth.username));
+  }
+}

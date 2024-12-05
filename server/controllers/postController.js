@@ -2,19 +2,19 @@ import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
 
 export const crateNewPost = async (req, res) => {
-  const { title, content } = req.body;
-  if (!title && !content) {
+  const { title, content, post } = req.body;
+  if (!title && !content && !post) {
     return res.status(400).send({ error: "title or content are required" });
   }
   const id = req.user._id;
   const username = req.user.username;
-  if (!title || !content) {
-    return res.status(400).json({
-      error: "All fields (title,content ) are required",
-    });
-  }
+  const profileImg = req.user.profileImg;
+
   try {
     const newPost = new Post({
+      profileImg: profileImg,
+      post,
+      post,
       username: username,
       title,
       content,

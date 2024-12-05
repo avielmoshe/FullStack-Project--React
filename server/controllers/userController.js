@@ -7,6 +7,9 @@ export const TokenValid = (req, res) => {
   try {
     res.status(200).send({
       username: req.user.username,
+      profile: req.user.profile,
+      bio: req.user.bio,
+      nickname: req.user.nickname,
       userLogout: false,
     });
   } catch (error) {
@@ -69,8 +72,17 @@ export const singInUser = async (req, res) => {
       return res.status(401).send({ error: "Invalid password." });
     }
 
-    const { _id, username, email, createdAt } = foundUser;
-    const filteredUser = { _id, username, email, createdAt };
+    const { _id, username, email, createdAt, profile, bio, nickname } =
+      foundUser;
+    const filteredUser = {
+      _id,
+      username,
+      email,
+      createdAt,
+      profile,
+      bio,
+      nickname,
+    };
 
     const token = JWT.sign(filteredUser, process.env.JWT_KEY, JWT_EXPIRATION);
 
@@ -95,18 +107,46 @@ export const singInUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { newUsername, newEmail } = req.body;
+    const { newUsername, newEmail, profile, nickname, bio, newPassword } =
+      req.body;
     const id = req.user._id;
     const updateData = {};
     if (newUsername) updateData.username = newUsername;
     if (newEmail) updateData.email = newEmail;
+    if (newPassword) updateData.password = newPassword;
+    if (profile) updateData.profile = profile;
+    if (nickname) updateData.nickname = nickname;
+    if (bio) updateData.bio = bio;
 
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
     });
+    const user = await User.findById(id);
+    console.log(user);
+
+    const token = JWT.sign(
+      {
+        id: user._id,
+        profile: user.profile,
+        bio: user.bio,
+        nickname: user.nickname,
+        username: user.username,
+        email: user.email,
+      },
+      process.env.JWT_KEY,
+      JWT_EXPIRATION
+    );
+    res.cookie("jwt", token, {
+      httpOnly: false,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
+
     res.status(201).send({
       message: "user updated successfully",
       updatedUser,
+      token,
     });
   } catch (error) {
     console.error("Error updating user", error);

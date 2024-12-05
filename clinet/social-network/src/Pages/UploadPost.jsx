@@ -1,5 +1,6 @@
 import { useCheckIfUserValid } from "../hooks/use-check-if-user-valid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ImageUpload from "../Components/uploadImg";
 
 const divChoice =
   "bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl";
@@ -10,12 +11,13 @@ const submitCss =
 const titleCss = `text-center mb-4  font-bold`;
 
 const UploadPost = () => {
-  const [btnText, setBtnText] = useState("Login");
+  const [btnText, setBtnText] = useState("Upload new post");
   const [msgText, setMsgText] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    post: "",
+    title: "",
+    content: "",
   });
 
   const handleChange = (e) => {
@@ -25,10 +27,15 @@ const UploadPost = () => {
       [name]: value,
     });
   };
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
-  const handleFormSubmit = async (e) => {};
+  useEffect(() => {
+    useCheckIfUserValid();
+  }, []);
 
-  useCheckIfUserValid();
   return (
     <div className="h-screen p-[20px] sm:mr-[70px}">
       <h1 className={titleCss}>Add new post</h1>
@@ -41,23 +48,24 @@ const UploadPost = () => {
           flexDirection: "column",
         }}
       >
+        <ImageUpload setFormData={setFormData} />
         <input
-          className={inputCss}
-          placeholder="Email"
-          value={formData.email}
-          type="email"
-          id="email"
-          name="email"
+          className="bg-bgBtnColor text-btnColor rounded-lg my-1 h-14 p-5 text-base"
+          placeholder="title"
+          value={formData.title}
+          type="text"
+          id="title"
+          name="title"
           onChange={handleChange}
           required={true}
         />
         <input
-          className={inputCss}
-          placeholder="Password"
+          className="bg-bgBtnColor h-[200px] text-btnColor rounded-lg my-1 h-14 p-5 text-base"
+          placeholder="content"
           type="text"
-          value={formData.password}
-          id="password"
-          name="password"
+          value={formData.content}
+          id="content"
+          name="content"
           onChange={handleChange}
           required={true}
         />

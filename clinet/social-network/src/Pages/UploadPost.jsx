@@ -33,6 +33,7 @@ const UploadPost = () => {
     console.log(formData);
     const data = await createPost(formData);
     setMsgText(data.status);
+    setFormData();
   };
 
   useCheckIfUserValid();

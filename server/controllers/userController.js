@@ -123,7 +123,18 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(id);
     console.log(user);
 
-    const token = JWT.sign(user, process.env.JWT_KEY, JWT_EXPIRATION);
+    const token = JWT.sign(
+      {
+        id: user._id,
+        profile: user.profile,
+        bio: user.bio,
+        nickname: user.nickname,
+        username: user.username,
+        email: user.email,
+      },
+      process.env.JWT_KEY,
+      JWT_EXPIRATION
+    );
     res.cookie("jwt", token, {
       httpOnly: false,
       secure: true,

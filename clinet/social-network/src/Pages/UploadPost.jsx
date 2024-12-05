@@ -32,9 +32,7 @@ const UploadPost = () => {
     console.log(formData);
   };
 
-  useEffect(() => {
-    useCheckIfUserValid();
-  }, []);
+  useCheckIfUserValid();
 
   return (
     <div className="h-screen p-[20px] sm:mr-[70px}">
@@ -48,7 +46,7 @@ const UploadPost = () => {
           flexDirection: "column",
         }}
       >
-        <ImageUpload setFormData={setFormData} />
+        <ImageUpload setFormData={setFormData} img={"post"} />
         <input
           className="bg-bgBtnColor text-btnColor rounded-lg my-1 h-14 p-5 text-base"
           placeholder="title"

@@ -66,3 +66,17 @@ export const deleteUser = async () => {
     console.log(error);
   }
 };
+
+export const createPost = async (user) => {
+  try {
+    const response = await axios.post(`${base_url}/api/post/cratePost`, user, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    return {
+      success: false,
+      error: error.response?.data || error.message,
+    };
+  }
+};

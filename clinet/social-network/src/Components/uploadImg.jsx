@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ImageUpload = ({ setFormData }) => {
+const ImageUpload = ({ setFormData, img }) => {
   //states for image creation
   const [image, setImage] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -29,7 +29,7 @@ const ImageUpload = ({ setFormData }) => {
       );
       setFormData({
         ...formData,
-        post: response.data.secure_url,
+        [img]: response.data.secure_url,
       });
       setUploadedImageUrl(response.data.secure_url); //send this to backend
       setUploadStatus("Image uploaded successfully!");

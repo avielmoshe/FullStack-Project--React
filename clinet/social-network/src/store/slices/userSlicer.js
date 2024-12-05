@@ -3,10 +3,18 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     username: "",
+    nickname: "",
+    profile: "",
+    bio: "",
   },
   reducers: {
     setUser: (state, action) => {
-      state.username = action.payload;
+      console.log(action.payload);
+
+      (state.username = action.payload.username),
+        (state.nickname = action.payload.nickname),
+        (state.profile = action.payload.profile),
+        (state.bio = action.payload.bio);
     },
   },
 });

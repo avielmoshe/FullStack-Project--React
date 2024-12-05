@@ -40,15 +40,17 @@ const Login = () => {
 
     const data = await signIn(formData);
     setBtnText("loading");
-    setMsgText(data.message);
 
     setTimeout(() => {
-      dispatch(setUser(data.username));
+      console.log(data);
+
       setFormData({
         email: "",
         password: "",
       });
       if (data.isAuth) {
+        dispatch(setUser(data.username));
+        setMsgText(data.message);
         navigate("/HomePage");
       } else {
         setMsgText(data.error.error);

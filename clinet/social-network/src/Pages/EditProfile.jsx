@@ -1,6 +1,6 @@
 import { useCheckIfUserValid } from "../hooks/use-check-if-user-valid";
-import { useState, useEffect } from "react";
-import { deleteUser, isUserValid } from "../utils/userApi";
+import { useState } from "react";
+import { deleteUser } from "../utils/userApi";
 import { deleteCookie } from "../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import ImageUpload from "../Components/uploadImg";
@@ -19,7 +19,8 @@ const EditProfile = () => {
   const [msgText, setMsgText] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    NikName: "",
+    profile: "",
+    nickname: "",
     bio: "",
     username: "",
     email: "",
@@ -38,6 +39,8 @@ const EditProfile = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
+
     setIsSubmitted(true);
     setBtnText("Submitting...");
     setTimeout(() => {
@@ -56,7 +59,7 @@ const EditProfile = () => {
       <h1 className={titleCss}>Edit Your Profile Details</h1>
       <div className={titleCss}>{msgText}gh</div>
       <div className={`${divChoice}`}>
-        <ImageUpload />
+        <ImageUpload setFormData={setFormData} img={"profile"} />
         <form
           onSubmit={handleFormSubmit}
           style={{
@@ -74,7 +77,6 @@ const EditProfile = () => {
               id="nickname"
               name="nickname"
               onChange={handleChange}
-              required={true}
             />
           </div>
           <div>
@@ -87,7 +89,6 @@ const EditProfile = () => {
               id="bio"
               name="bio"
               onChange={handleChange}
-              required={true}
             />
           </div>
           <div>
@@ -100,7 +101,6 @@ const EditProfile = () => {
               id="username"
               name="username"
               onChange={handleChange}
-              required={true}
             />
           </div>
           <div>
@@ -113,7 +113,6 @@ const EditProfile = () => {
               id="email"
               name="email"
               onChange={handleChange}
-              required={true}
             />
           </div>
           <div>
@@ -126,7 +125,6 @@ const EditProfile = () => {
               id="password"
               name="password"
               onChange={handleChange}
-              required={true}
             />
           </div>
           <button

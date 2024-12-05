@@ -12,6 +12,6 @@ export async function useCheckIfUserValid() {
   if (dataAuth.userLogout) {
     navigate("/");
   } else {
-    dispatch(setUser(dataAuth.username));
+    dispatch(setUser(dataAuth));
   }
 }

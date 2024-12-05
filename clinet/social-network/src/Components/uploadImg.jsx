@@ -40,10 +40,10 @@ const ImageUpload = ({ setFormData, img }) => {
   };
 
   return (
-    <div>
-      <h1>Upload an Image</h1>
+    <div className="mt-10 bg-primary flex flex-col gap-7 rounded-lg p-10  ">
+      <h1 className="underline">Upload an Image</h1>
       <input type="file" onChange={handleImageChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <button onClick={handleUpload} className="bg-slate-900 mx-12 mb-5">Upload</button>
       {uploadStatus && <p>{uploadStatus}</p>}
       {uploadedImageUrl && (
         <div>

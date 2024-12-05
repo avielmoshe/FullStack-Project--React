@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#101010",
+        primary: "#222020f2",
         bgBtnColor: "hsla(0, 2%, 13%, 0.948)",
         btnColor: "#AAAAAA",
         navColor: "rgb(24 24 27)",

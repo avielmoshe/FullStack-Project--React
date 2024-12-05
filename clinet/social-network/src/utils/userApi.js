@@ -47,7 +47,22 @@ export const isUserValid = async () => {
   }
 };
 
-export const updateUser = async (username, email, password) => {
+export const updateUser = async () => {
   try {
   } catch (error) {}
+};
+
+export const deleteUser = async () => {
+  try {
+    const jwt = Cookies.get("jwt");
+    const response = await axios.delete(`${base_url}/api/user/deleteUser`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

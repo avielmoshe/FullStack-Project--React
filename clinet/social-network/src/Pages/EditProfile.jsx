@@ -1,10 +1,13 @@
 import { useCheckIfUserValid } from "../hooks/use-check-if-user-valid";
-import { useState } from "react";
-import { deleteUser } from "../utils/userApi";
+import { useState, useEffect } from "react";
+import { deleteUser, isUserValid } from "../utils/userApi";
+import { deleteCookie } from "../utils/cookie";
+import { useNavigate } from "react-router-dom";
+import ImageUpload from "../Components/uploadImg";
 
 const divChoice = "w-[470px] mx-auto text-m";
 const inputCss =
-  "bg-bgBtnColor text-btnColor rounded-lg my-4 mx-3 h-6 p-3 text-base w-full";
+  "bg-bgBtnColor text-btnColor rounded-lg my-4 mx-3 h-10 p-3 text-base w-full";
 const submitCss =
   "bg-bgBtnColor text-btnColor rounded-lg my-1 p-1.5 text-[17px] leading-none hover:bg-btnHover transition-all duration-300";
 const deleteCss =
@@ -22,6 +25,8 @@ const EditProfile = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  useCheckIfUserValid();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,20 +47,16 @@ const EditProfile = () => {
     }, 2000);
   };
 
-  useCheckIfUserValid();
+  const handleDelete = () => {
+    deleteUser(), deleteCookie(), navigate("/");
+  };
+
   return (
     <div className="h-screen p-[20px] sm:mr-[70px}">
       <h1 className={titleCss}>Edit Your Profile Details</h1>
-      <div className={titleCss}>{msgText}</div>
+      <div className={titleCss}>{msgText}gh</div>
       <div className={`${divChoice}`}>
-        <label htmlFor="avatar">Change a profile picture:</label>
-        <input
-          className="bg-bgBtnColor text-btnColor rounded-lg my-4 mx-3 h-6 p-20 text-base w-full"
-          type="file"
-          id="avatar"
-          name="avatar"
-          accept="image/png, image/jpeg"
-        />
+        <ImageUpload />
         <form
           onSubmit={handleFormSubmit}
           style={{
@@ -64,14 +65,14 @@ const EditProfile = () => {
           }}
         >
           <div>
-            <label htmlFor="NikName">Change NikName:</label>
+            <label htmlFor="nickname">Change NickName:</label>
             <input
               className={inputCss}
-              placeholder="NikName"
-              value={formData.NikName}
+              placeholder="NickName"
+              value={formData.nickname}
               type="text"
-              id="NikName"
-              name="NikName"
+              id="nickname"
+              name="nickname"
               onChange={handleChange}
               required={true}
             />
@@ -135,7 +136,7 @@ const EditProfile = () => {
             {btnText}
           </button>
         </form>
-        <button className={deleteCss} onClick={() => deleteUser()}>
+        <button className={deleteCss} onClick={handleDelete}>
           DELETE USER
         </button>
       </div>

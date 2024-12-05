@@ -67,11 +67,18 @@ export const deleteUser = async () => {
   }
 };
 
-export const createPost = async (user) => {
+export const createPost = async (postData) => {
   try {
-    const response = await axios.post(`${base_url}/api/post/cratePost`, user, {
-      withCredentials: true,
-    });
+    const jwt = Cookies.get("jwt");
+    const response = await axios.post(
+      `${base_url}/api/post/cratePost`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     return {

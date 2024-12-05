@@ -1,6 +1,7 @@
 import { useCheckIfUserValid } from "../hooks/use-check-if-user-valid";
 import { useState, useEffect } from "react";
 import ImageUpload from "../Components/uploadImg";
+import { createPost } from "../utils/userApi.js";
 
 const divChoice =
   "bg-primary text-center my-10 w-40 mx-auto border-1 rounded-md -mt-2 text-2xl";
@@ -30,6 +31,8 @@ const UploadPost = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    const data = await createPost(formData);
+    setMsgText(data.status);
   };
 
   useCheckIfUserValid();
